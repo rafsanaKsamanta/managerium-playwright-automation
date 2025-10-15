@@ -65,6 +65,8 @@ await page.getByPlaceholder('Mobile Number').fill(randomMobile);
   await page.getByRole('button', { name: 'Add', exact: true }).click();
   await page.getByRole('button', { name: 'SAVE' }).click();
   await page.waitForTimeout(3000); // Wait 5 seconds
+  
   //logout
+  await page.getByRole('img', { name: 'pp' }).click();
   await page.getByRole('button', { name: 'Log Out' }).click();
 });
