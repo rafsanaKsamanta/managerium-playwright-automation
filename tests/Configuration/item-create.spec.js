@@ -40,6 +40,8 @@ await page.getByRole('textbox', { name: 'Item Name', exact: true }).fill(randomI
   await page.getByRole('button', { name: 'SAVE', exact: true }).click();
   await page.getByRole('button').nth(3).click();
   await page.getByText('FG-').nth(1).click();
-  await page.waitForTimeout(5000); // Wait 5 seconds
+  await page.waitForTimeout(3000); // Wait 3 seconds
+  //logout
+  await page.getByRole('button', { name: 'Log Out' }).click();
 
 });

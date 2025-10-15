@@ -64,5 +64,7 @@ await page.getByPlaceholder('Mobile Number').fill(randomMobile);
   await page.getByRole('option', { name: 'MGM Warehouse bd' }).click();
   await page.getByRole('button', { name: 'Add', exact: true }).click();
   await page.getByRole('button', { name: 'SAVE' }).click();
-  await page.waitForTimeout(5000); // Wait 5 seconds
+  await page.waitForTimeout(3000); // Wait 5 seconds
+  //logout
+  await page.getByRole('button', { name: 'Log Out' }).click();
 });
