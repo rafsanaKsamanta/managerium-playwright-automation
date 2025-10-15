@@ -11,7 +11,7 @@ test('test', async ({ page }) => {
   await page.getByRole('link', { name: 'Item Profile' }).click();
   await page.getByRole('button', { name: 'Add Item' }).click();
   await page.getByRole('checkbox', { name: 'AutoBarCode' }).check();
-  //random printed item code
+  //randomized printed item code
   function generateRandomItemCode() {
   const prefix = 'ITEM';
   const randomNum = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
