@@ -28,6 +28,7 @@ await page.getByRole('textbox', { name: 'Printed / Customer Item Code' }).fill(r
 
 const randomItemName = generateRandomItemName();
 await page.getByRole('textbox', { name: 'Item Name', exact: true }).fill(randomItemName);
+
   await page.locator('#uom > .css-tmcups-control > .css-1ifxr7z > .css-18w4uv4').click();
   await page.locator('#uom #react-select-mgm-input').fill('pcs');
   await page.getByRole('option', { name: 'PCS' }).click();
