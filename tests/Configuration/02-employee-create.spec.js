@@ -6,7 +6,7 @@ test('test', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Enter your mobile no' }).click();
   await page.getByRole('textbox', { name: 'Enter your mobile no' }).fill('01679172828');
   await page.locator('div:nth-child(4) > div:nth-child(3)').click();
-  await page.getByRole('textbox', { name: 'Enter your password' }).fill('ibos@123');
+  await page.getByRole('textbox', { name: 'Enter your password' }).fill('123456');
   await page.getByRole('button', { name: 'LOG IN' }).click();
   await page.getByText('Configuration').nth(2).click();
   await page.getByRole('link', { name: 'Employee' }).click();

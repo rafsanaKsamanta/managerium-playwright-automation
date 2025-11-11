@@ -1,0 +1,34 @@
+import { test, expect } from '@playwright/test';
+
+test('test', async ({ page }) => {
+  await page.goto('https://devmgm.ibos.io/');
+  await page.getByRole('textbox', { name: 'Enter your mobile no' }).click();
+  await page.getByRole('textbox', { name: 'Enter your mobile no' }).fill('01796662');
+  await page.getByRole('textbox', { name: 'Enter your password' }).click();
+  await page.getByRole('textbox', { name: 'Enter your password' }).fill('123456');
+  await page.getByRole('button', { name: 'LOG IN' }).click();
+  await page.getByText('Account').first().click();
+  //await page.getByRole('link', { name: 'Accounting Journal' }).click();
+  await page.goto('https://devmgm.ibos.io/accounts/businessTransaction');
+  await page.getByRole('button', { name: 'Journal' }).click();
+  await page.getByRole('textbox', { name: 'Narration' }).click();
+  await page.getByRole('textbox', { name: 'Narration' }).fill('testby Sam');
+  await page.locator('#chartOfAccount > .css-tmcups-control > .css-1ifxr7z > .css-18w4uv4').click();
+  await page.getByRole('option', { name: '- Cash in hand' }).click();
+  await page.getByText('Debit/Credit *Debit Or Credit').click();
+  await page.locator('form').filter({ hasText: 'Journal Voucher' }).locator('form').click();
+  await page.locator('#debitOrCredit > .css-tmcups-control > .css-1ifxr7z > .css-18w4uv4').click();
+  await page.getByRole('option', { name: 'Debit' }).click();
+  await page.getByPlaceholder('Amount').click();
+  await page.getByPlaceholder('Amount').fill('200');
+  await page.getByRole('button', { name: 'Add List' }).click();
+  await page.locator('#chartOfAccount > .css-tmcups-control > .css-1ifxr7z > .css-18w4uv4').click();
+  await page.getByRole('option', { name: '555555 - Inventory' }).click();
+  await page.locator('.css-uevkuo-control > .css-1ifxr7z > .css-18w4uv4').click();
+  await page.getByRole('option', { name: 'Credit' }).click();
+  await page.getByRole('button', { name: 'Add List' }).click();
+  await page.getByText('Journal Voucher CreateSAVE').click();
+  await page.getByRole('button', { name: 'SAVE' }).click();
+  await page.getByRole('img', { name: 'demo' }).click();
+  await page.getByRole('button', { name: 'Log Out' }).click();
+});
