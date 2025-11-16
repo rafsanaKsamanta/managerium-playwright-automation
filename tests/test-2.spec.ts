@@ -12,13 +12,8 @@ test('test', async ({ page }) => {
   await page.getByRole('link', { name: 'Item Profile' }).click();
   await page.getByRole('button', { name: 'Add Item' }).click();
   await page.getByText('AutoBarCode').click();
-  
-  //random item name 
-  const randomItemName = "itemx" + Math.floor(Math.random() * 10000);
-
-  await page.getByRole('textbox', { name: 'Item Name', exact: true }).fill(randomItemName);
-  //-------------
-
+  await page.getByRole('textbox', { name: 'Item Name', exact: true }).click();
+  await page.getByRole('textbox', { name: 'Item Name', exact: true }).fill('itemx13');
   await page.locator('#uom > .css-tmcups-control > .css-1ifxr7z > .css-18w4uv4').click();
   await page.getByRole('option', { name: 'pieces' }).click();
   await page.locator('#itemCategory > .css-tmcups-control > .css-1ifxr7z > .css-18w4uv4').click();
