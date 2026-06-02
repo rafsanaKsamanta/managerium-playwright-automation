@@ -9,7 +9,15 @@ test('test', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Enter your password' }).fill('123456');
   await page.getByRole('button', { name: 'LOG IN' }).click();
   await page.getByRole('img', { name: 'ERP' }).click();
-  await page.getByText('Configuration', { exact: true }).click();
+  // Click the sidebar 'Configuration' menu (not the RTM one)
+  await page.getByRole('listitem').filter({ hasText: 'Configuration' }).first().click();
+  // Wait for any loading overlays to disappear before clicking
+  await page.waitForSelector('.global-loading-css', { state: 'detached', timeout: 15000 }).catch(() => {});
+  // Expand the sidebar 'Configuration' parent if needed
+  const configMenu = page.getByRole('listitem').filter({ hasText: 'Configuration' }).last();
+  await configMenu.click();
+  // Wait for submenu to appear
+  await page.waitForSelector('a[href="/config/otherPartnerProfile"]', { timeout: 5000 });
   await page.getByRole('link', { name: 'Other Partner Profile' }).click();
   await page.getByRole('button', { name: 'Supplier & Customer' }).click();
   await page.locator('.css-tmcups-control > .css-1ifxr7z > .css-18w4uv4').first().click();
