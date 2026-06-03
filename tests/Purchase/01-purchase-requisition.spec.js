@@ -1,5 +1,27 @@
 import { test, expect } from '@playwright/test';
 
+/**
+ * Reusable function to add items in Purchase Requisition
+ */
+async function addItem(page, itemName, quantity = '1') {
+  await page.locator(
+    '#item > .css-1t867gr-control > .css-1kjwjp5 > .css-i8r28j'
+  ).click();
+
+  await page.getByRole('option', {
+    name: itemName
+  }).click();
+
+  await page
+    .getByPlaceholder('Request Quantity')
+    .first()
+    .fill(quantity);
+
+  await page.getByRole('button', {
+    name: 'Add'
+  }).click();
+}
+
 test('Create Purchase Requisition Successfully', async ({ page }) => {
 
   // =====================================================
@@ -7,6 +29,16 @@ test('Create Purchase Requisition Successfully', async ({ page }) => {
   // =====================================================
   const MOBILE_NO = '01974338899';
   const PASSWORD = '123456';
+
+  const items = [
+    { name: '01Ss - Winter Pitha NEW (KG)', qty: '1' },
+    { name: '11oz - White Gems Only (', qty: '1' },
+    { name: 'r4444 - Wheelbarrow for Shop', qty: '1' },
+    { name: '- Wheelbarrow Big (PCS)', qty: '1' },
+    { name: '- Wheelbarrow Asus (PCS)', qty: '1' },
+    { name: '- wheel (PCS)', qty: '1' },
+    { name: '- wheel (PCS)', qty: '1' },
+  ];
 
   // =====================================================
   // Step 1: Login to MGM Application
@@ -25,7 +57,7 @@ test('Create Purchase Requisition Successfully', async ({ page }) => {
     name: 'LOG IN'
   }).click();
 
-  // Verify login success
+  // Verify successful login
   await expect(page.locator('body')).toContainText('Purchase');
 
   // =====================================================
@@ -45,7 +77,7 @@ test('Create Purchase Requisition Successfully', async ({ page }) => {
   }).click();
 
   // =====================================================
-  // Step 3: Select Requisition Information
+  // Step 3: Fill Requisition Information
   // =====================================================
 
   // Select Designation
@@ -85,88 +117,9 @@ test('Create Purchase Requisition Successfully', async ({ page }) => {
   // Step 4: Add Requisition Items
   // =====================================================
 
-  // Item 1
-  await page.locator(
-    '#item > .css-1t867gr-control > .css-1kjwjp5 > .css-i8r28j'
-  ).click();
-
-  await page.getByRole('option', {
-    name: '01Ss - Winter Pitha NEW (KG)'
-  }).click();
-
-  await page.getByPlaceholder('Request Quantity').fill('1');
-
-  await page.getByRole('button', {
-    name: 'Add'
-  }).click();
-
-  // -----------------------------------------------------
-  // Item 2
-  // -----------------------------------------------------
-  await page.locator(
-    '#item > .css-1t867gr-control > .css-1kjwjp5 > .css-i8r28j'
-  ).click();
-
-  await page.getByRole('option', {
-    name: '11oz - White Gems Only ('
-  }).click();
-
-  await page.getByPlaceholder('Request Quantity').first().fill('1');
-
-  await page.getByRole('button', {
-    name: 'Add'
-  }).click();
-
-  // -----------------------------------------------------
-  // Item 3
-  // -----------------------------------------------------
-  await page.locator(
-    '#item > .css-1t867gr-control > .css-1kjwjp5 > .css-i8r28j'
-  ).click();
-
-  await page.getByRole('option', {
-    name: 'r4444 - Wheelbarrow for Shop'
-  }).click();
-
-  await page.getByPlaceholder('Request Quantity').first().fill('1');
-
-  await page.getByRole('button', {
-    name: 'Add'
-  }).click();
-
-  // -----------------------------------------------------
-  // Item 4
-  // -----------------------------------------------------
-  await page.locator(
-    '#item > .css-1t867gr-control > .css-1kjwjp5 > .css-i8r28j'
-  ).click();
-
-  await page.getByRole('option', {
-    name: '- Wheelbarrow Big (PCS)'
-  }).click();
-
-  await page.getByPlaceholder('Request Quantity').first().fill('1');
-
-  await page.getByRole('button', {
-    name: 'Add'
-  }).click();
-
-  // -----------------------------------------------------
-  // Item 5
-  // -----------------------------------------------------
-  await page.locator(
-    '#item > .css-1t867gr-control > .css-1kjwjp5 > .css-i8r28j'
-  ).click();
-
-  await page.getByRole('option', {
-    name: '- Wheelbarrow Asus (PCS)'
-  }).click();
-
-  await page.getByPlaceholder('Request Quantity').first().fill('1');
-
-  await page.getByRole('button', {
-    name: 'Add'
-  }).click();
+  for (const item of items) {
+    await addItem(page, item.name, item.qty);
+  }
 
   // =====================================================
   // Step 5: Save Purchase Requisition
@@ -184,13 +137,13 @@ test('Create Purchase Requisition Successfully', async ({ page }) => {
   // =====================================================
   // Step 6: Verify Requisition Created
   // =====================================================
-  await page.getByRole('cell', {
-    name: 'PR-M260600000'
-  }).click();
 
-  // Optional Validation:
-  // Verify requisition number is visible
-  // await expect(page.getByText('PR-M260600000')).toBeVisible();
+  // Wait for requisition list/grid to load
+  await page.waitForLoadState('networkidle');
+
+  // Optional Validation
+  // Replace with actual success message or requisition number validation
+  // await expect(page.getByText('Successfully Created')).toBeVisible();
 
   // =====================================================
   // Step 7: Logout

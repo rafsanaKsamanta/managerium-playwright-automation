@@ -1,55 +1,52 @@
 import { test, expect } from '@playwright/test';
 
-test('create 50 journal vouchers', async ({ page }) => {
-  // Login
-  await page.goto('https://devmgm.ibos.io/');
-  await page.getByRole('textbox', { name: 'Enter your mobile no' }).fill('01796662');
+test('test', async ({ page }) => {
+  await page.goto('https://mgm.ibos.io/');
+  await page.locator('.sc-ikkxIA').first().click();
+  await page.getByRole('textbox', { name: 'Enter your mobile no' }).fill('01974338899');
+  await page.getByRole('textbox', { name: 'Enter your password' }).click();
   await page.getByRole('textbox', { name: 'Enter your password' }).fill('123456');
+  await page.getByRole('textbox', { name: 'Enter your password' }).press('Enter');
   await page.getByRole('button', { name: 'LOG IN' }).click();
-  await page.getByText('Account').first().click();
-  // Navigate to Accounting Journal page for each iteration
-    await page.goto('https://devmgm.ibos.io/accounts/businessTransaction');
-
-  for (let i = 1; i <= 50; i++) {
-    console.log(`Creating Journal Voucher #${i}`);
-
-    await page.goto('https://devmgm.ibos.io/accounts/businessTransaction/create');
-
-    // Click Journal button
-    const journalButton = page.getByRole('button', { name: 'Journal' });
-    await journalButton.waitFor({ state: 'visible' });
-    await journalButton.click();
-
-    // Fill Narration
-    await page.getByRole('textbox', { name: 'Narration' }).click();
-  await page.getByRole('textbox', { name: 'Narration' }).fill('testby Sam');
-    // 1st Entry
-    await page.locator('#chartOfAccount > .css-tmcups-control > .css-1ifxr7z > .css-18w4uv4').click();
-    await page.getByRole('option', { name: '- Cash in hand' }).click();
-    await page.locator('#debitOrCredit > .css-tmcups-control > .css-1ifxr7z > .css-18w4uv4').click();
-    await page.getByRole('option', { name: 'Debit' }).click();
-    await page.getByPlaceholder('Amount').fill('200');
-    await page.getByRole('button', { name: 'Add List' }).click();
-
-    // 2nd Entry
-    await page.locator('#chartOfAccount > .css-tmcups-control > .css-1ifxr7z > .css-18w4uv4').click();
-    await page.getByRole('option', { name: '555555 - Inventory' }).click();
-    await page.locator('.css-uevkuo-control > .css-1ifxr7z > .css-18w4uv4').click();
-    await page.getByRole('option', { name: 'Credit' }).click();
-    await page.getByRole('button', { name: 'Add List' }).click();
-
-    // Save voucher
-    await page.getByRole('button', { name: 'SAVE' }).click();
-
-    
-
-    // Small delay to ensure page reloads completely
-    await page.waitForTimeout(3000);
-  }
-
-  // Logout
+  await page.locator('div').filter({ hasText: /^Account$/ }).click();
+  await page.getByRole('link', { name: 'Accounting Journal' }).click();
+  await page.getByRole('button', { name: 'Journal' }).click();
+  await page.getByRole('textbox', { name: 'Narration' }).click();
+  await page.getByRole('textbox', { name: 'Narration' }).fill('automation test by samanta');
+  await page.locator('#chartOfAccount > .css-tmcups-control > .css-1ifxr7z > .css-18w4uv4').click();
+  await page.getByRole('option', { name: 'Inventory', exact: true }).click();
+  await page.locator('.css-uevkuo-control > .css-1ifxr7z > .css-18w4uv4').click();
+  await page.getByRole('option', { name: 'Debit' }).click();
+  await page.locator('#debitOrCredit').getByTestId('ArrowDropDownIcon').click();
+  await page.locator('#debitOrCredit #react-select-mgm-input').fill('');
+  await page.getByRole('option', { name: 'Debit' }).click();
+  await page.getByPlaceholder('Amount').click();
+  await page.getByPlaceholder('Amount').fill('2000');
+  await page.getByRole('textbox', { name: 'Remarks' }).click();
+  await page.getByRole('textbox', { name: 'Remarks' }).fill('x');
+  await page.getByRole('button', { name: 'Add List' }).click();
+  await page.locator('#chartOfAccount > .css-tmcups-control > .css-1ifxr7z > .css-18w4uv4').click();
+  await page.getByRole('option', { name: '- Cash in hand' }).click();
+  await page.locator('.css-uevkuo-control > .css-1ifxr7z > .css-18w4uv4').click();
+  await page.getByRole('option', { name: 'Credit' }).click();
+  await page.getByRole('textbox', { name: 'Remarks', exact: true }).click();
+  await page.getByRole('textbox', { name: 'Remarks', exact: true }).fill('y');
+  await page.getByRole('button', { name: 'Add List' }).click();
+  await page.getByRole('button', { name: 'SAVE' }).click();
+  await page.getByRole('button').nth(3).click();
+  await page.getByRole('tab', { name: 'Pending Voucher' }).click();
+  await page.getByText('JV-M260600003').click();
+  await page.getByRole('button', { name: 'Close' }).click();
+  await page.locator('div').filter({ hasText: /^Account$/ }).click();
+  await page.getByRole('link', { name: 'Approval', exact: true }).click();
+  await page.getByText('Journal Voucher').click();
+  await page.getByRole('button').nth(5).click();
+  await page.getByRole('button', { name: 'Yes' }).click();
+  await page.locator('div').filter({ hasText: /^Account$/ }).click();
+  await page.getByRole('link', { name: 'Accounting Journal' }).click();
+  await page.getByRole('tab', { name: 'Voucher Repository' }).click();
+  await page.getByRole('cell', { name: 'JV-M260600003' }).click();
+  await page.getByRole('button', { name: 'Close' }).click();
   await page.getByRole('img', { name: 'demo' }).click();
   await page.getByRole('button', { name: 'Log Out' }).click();
-
-  console.log('✅ Successfully created 50 journal vouchers!');
 });
