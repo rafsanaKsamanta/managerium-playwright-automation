@@ -33,8 +33,10 @@ test('test', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Bank Short Name' }).fill('BN');
   await page.getByRole('textbox', { name: 'Signatory' }).click();
   await page.getByRole('textbox', { name: 'Signatory' }).fill('samanta');
+  // Wait for 1 seconds
+  await page.waitForTimeout(1000);
+  
   await page.getByRole('button', { name: 'SAVE' }).click();
   await page.getByRole('img', { name: 'demo' }).click();
-  await page.getByRole('button', { name: 'Log Out' }).click();
   await page.getByRole('button', { name: 'Log Out' }).click();
 });
