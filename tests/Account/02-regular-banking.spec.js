@@ -15,8 +15,9 @@ test('test', async ({ page }) => {
   await page.getByRole('link', { name: 'Finance & Banking' }).click();
   await page.getByRole('button', { name: 'Regular Banking' }).click();
 
-  await page.getByRole('textbox', { name: 'Account Name' }).click();
-  await page.getByRole('textbox', { name: 'Account Name' }).fill('Test Acc 101');
+  const accountName = `Test Acc ${Math.floor(Math.random() * 1000) + 101}`;
+
+  await page.getByRole('textbox', { name: 'Account Name' }).fill(accountName);
   await page.locator('.css-18w4uv4').click();
 
   await page.getByRole('option', { name: 'AGRANI BANK LTD PLC' }).click();
@@ -25,9 +26,10 @@ test('test', async ({ page }) => {
   await page.locator('#react-select-mgm-placeholder').click();
   await page.getByRole('option', { name: 'Savings Account' }).click();
 
-  await page.getByPlaceholder('Bank Account Number').fill('1234566');
+  const bankAccountNumber = `${Math.floor(Math.random() * 9000000) + 1000000}`;
+  await page.getByPlaceholder('Bank Account Number').fill(bankAccountNumber);
+
   await page.getByRole('textbox', { name: 'Bank Short Name' }).click();
-  
   await page.getByRole('textbox', { name: 'Bank Short Name' }).fill('BN');
   await page.getByRole('textbox', { name: 'Signatory' }).click();
   await page.getByRole('textbox', { name: 'Signatory' }).fill('samanta');

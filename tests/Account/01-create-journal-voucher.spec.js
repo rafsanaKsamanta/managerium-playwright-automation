@@ -69,6 +69,10 @@ test('Create and verify accounting journal voucher', async ({ page }) => {
   // Add entry to journal list
   await page.getByRole('button', { name: 'Add List' }).click();
 
+  //2 seconds wait
+  await page.waitForTimeout(1000);
+
+
   // Save the journal voucher
   await page.getByRole('button', { name: 'SAVE' }).click();
 
