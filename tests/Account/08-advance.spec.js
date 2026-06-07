@@ -45,7 +45,8 @@ test('test', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Remarks' }).fill('automation by samanta');
 
   // Enter advance amount
-  await page.getByPlaceholder('Amount').fill('100');
+  const randomAmount = Math.floor(Math.random() * 10000) + 1; // 1 - 10000
+  await page.getByPlaceholder('Amount').fill(randomAmount.toString());
 
   // Save advance
   await page.getByRole('button', { name: 'Save' }).click();
