@@ -1,60 +1,24 @@
 import { test, expect } from '@playwright/test';
 
 test('test', async ({ page }) => {
-
-  // Open the application login page
   await page.goto('https://mgm.ibos.io/');
-
-  // Enter mobile number
   await page.getByRole('textbox', { name: 'Enter your mobile no' }).click();
   await page.getByRole('textbox', { name: 'Enter your mobile no' }).fill('01974338899 ');
-
-  // Enter password
   await page.getByRole('textbox', { name: 'Enter your password' }).click();
   await page.getByRole('textbox', { name: 'Enter your password' }).fill('123456');
-
-  // Click login button
   await page.getByRole('button', { name: 'LOG IN' }).click();
-
-  // Navigate to Approval section
   await page.getByRole('link', { name: 'Approval', exact: true }).click();
-
-  // Open Purchase Return Approval page
   await page.getByText('Purchase Return Approval').click();
-
-  // Select a specific record checkbox in the table row
-  await page
-    .getByRole('row', { name: '1 10-06-2026 MGM Head Office' })
-    .getByRole('checkbox')
-    .check();
-
-  // Click Approve button
+  await page.getByRole('row', { name: '1 10-06-2026 MGM Head Office' }).getByRole('checkbox').check();
+  
   await page.getByRole('button', { name: 'Approve' }).click();
-
-  // Wait for approval confirmation popup to load
   await page.waitForTimeout(1000);
-
-  // Confirm approval
   await page.getByRole('button', { name: 'Yes' }).click();
-
-  // Navigate back to Purchase section
   await page.locator('div').filter({ hasText: /^Purchase$/ }).click();
-
-  // Open Purchase Return page
   await page.getByRole('link', { name: 'Purchase Return' }).click();
-
-  // Wait for page to load
   await page.waitForTimeout(1000);
-
-  // Open Return List tab
   await page.getByRole('tab', { name: 'Return List' }).click();
-
-  // Wait for list to load
   await page.waitForTimeout(1000);
-
-  // Open user/profile or demo icon
   await page.getByRole('img', { name: 'demo' }).click();
-
-  // Logout from the application
   await page.getByRole('button', { name: 'Log Out' }).click();
 });
