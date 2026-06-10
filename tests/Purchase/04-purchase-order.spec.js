@@ -4,9 +4,9 @@ test('Create Local Purchase Order', async ({ page }) => {
 
   // Product Add Function
   async function addProduct(
-    productName: string,
-    qty: string,
-    rate?: string
+    productName,
+    qty,
+    rate
   ) {
     await page.locator('.css-15kv1zh-control > .css-1kjwjp5 > .css-i8r28j').click();
     await page.getByRole('option', { name: productName }).click();
