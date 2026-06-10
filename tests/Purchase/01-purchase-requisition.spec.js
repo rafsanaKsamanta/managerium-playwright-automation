@@ -141,9 +141,7 @@ test('Create Purchase Requisition Successfully', async ({ page }) => {
   // Wait for requisition list/grid to load
   await page.waitForLoadState('networkidle');
 
-  // Optional Validation
-  // Replace with actual success message or requisition number validation
-  // await expect(page.getByText('Successfully Created')).toBeVisible();
+  
 
   // =====================================================
   // Step 7: Logout
